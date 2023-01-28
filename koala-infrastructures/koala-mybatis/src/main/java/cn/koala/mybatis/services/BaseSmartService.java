@@ -4,13 +4,14 @@ import cn.koala.mybatis.IdModel;
 import cn.koala.mybatis.repositories.BaseRepository;
 import lombok.Getter;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Function;
 
 /**
  * 基础智能服务抽象类
  * <p>
- * 在基础服务类上新增了部分功能: 代码生成ID
+ * 在基础服务类上新增了部分功能: 代码生成ID/数据存在检查/数据操作校验
  *
  * @author Houtaroy
  */
@@ -21,6 +22,11 @@ public abstract class BaseSmartService<T extends IdModel<ID>, ID> extends BaseSe
   public BaseSmartService(BaseRepository<T, ID> repository, Function<T, ID> idBuilder) {
     super(repository);
     this.idBuilder = idBuilder;
+  }
+
+  @Override
+  public T findById(ID id) {
+    return repository.findById(id).orElseThrow(() -> new NoSuchElementException("数据不存在"));
   }
 
   @Override

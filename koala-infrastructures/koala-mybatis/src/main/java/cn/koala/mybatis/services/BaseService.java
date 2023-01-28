@@ -11,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -32,7 +31,7 @@ public abstract class BaseService<T extends IdModel<ID>, ID> implements CrudServ
 
   @Override
   public T findById(ID id) {
-    return repository.findById(id).orElseThrow(() -> new NoSuchElementException("数据不存在"));
+    return repository.findById(id).orElse(null);
   }
 
   @Override
