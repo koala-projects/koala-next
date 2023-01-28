@@ -15,13 +15,16 @@
   </parent>
 
   <properties>
-    <!--spring相关-->
+    <!--Spring相关-->
     <spring-boot.version>3.0.2</spring-boot.version>
     <springdoc-openapi-ui.version>1.6.14</springdoc-openapi-ui.version>
-    <!--其他依赖-->
-    <junit.version>5.8.2</junit.version>
+    <!--MyBatis相关-->
+    <mybatis.version>3.5.7</mybatis.version>
+    <mybatis-springboot.version>2.2.2</mybatis-springboot.version>
     <pagehelper.version>5.3.1</pagehelper.version>
     <pagehelper-spring-boot-starter.version>1.4.3</pagehelper-spring-boot-starter.version>
+    <!--其他依赖-->
+    <junit.version>5.8.2</junit.version>
     <slf4j.version>1.7.36</slf4j.version>
     <!--maven-->
     <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
@@ -49,6 +52,17 @@
         <groupId>org.springdoc</groupId>
         <artifactId>springdoc-openapi-ui</artifactId>
         <version>${springdoc-openapi-ui.version}</version>
+      </dependency>
+      <!--MyBatis相关-->
+      <dependency>
+        <groupId>org.mybatis</groupId>
+        <artifactId>mybatis</artifactId>
+        <version>${mybatis.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.pagehelper</groupId>
+        <artifactId>pagehelper</artifactId>
+        <version>${pagehelper.version}</version>
       </dependency>
       <!--其他-->
       <dependency>
