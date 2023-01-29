@@ -1,10 +1,22 @@
 package cn.koala.mybatis;
 
+import lombok.Getter;
+
 /**
- * TODO: 修改类描述
+ * 是否枚举
  *
  * @author Houtaroy
  */
-public enum YesNo {
-  YES, NO
+@Getter
+public enum YesNo implements EnhancedEnum {
+  YES("是", 1),
+  NO("否", 2);
+
+  private final String name;
+  private final int value;
+
+  YesNo(String name, int value) {
+    this.name = name;
+    this.value = value;
+  }
 }
