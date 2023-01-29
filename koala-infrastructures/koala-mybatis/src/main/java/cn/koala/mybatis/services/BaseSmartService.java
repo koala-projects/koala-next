@@ -22,6 +22,10 @@ import java.util.function.Function;
 public abstract class BaseSmartService<T extends IdModel<ID>, ID> extends BaseService<T, ID> {
   protected final Function<T, ID> idBuilder;
 
+  public BaseSmartService(BaseRepository<T, ID> repository) {
+    this(repository, (T entity) -> null);
+  }
+
   public BaseSmartService(BaseRepository<T, ID> repository, Function<T, ID> idBuilder) {
     super(repository);
     this.idBuilder = idBuilder;

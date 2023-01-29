@@ -3,8 +3,8 @@ package cn.koala.mybatis.services;
 import cn.koala.mybatis.IdModel;
 import cn.koala.mybatis.repositories.BaseRepository;
 import com.github.pagehelper.PageHelper;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +19,7 @@ import java.util.function.Function;
  *
  * @author Houtaroy
  */
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
 public abstract class BaseService<T extends IdModel<ID>, ID> implements CrudService<T, ID>, PagingService<T> {
   protected final BaseRepository<T, ID> repository;
