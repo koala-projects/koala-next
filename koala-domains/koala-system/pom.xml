@@ -16,6 +16,10 @@
 
   <dependencies>
     <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-oauth2-authorization-server</artifactId>
+    </dependency>
+    <dependency>
       <groupId>cn.koala</groupId>
       <artifactId>koala-mybatis</artifactId>
     </dependency>
