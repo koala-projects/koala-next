@@ -1,5 +1,6 @@
 package cn.koala.mybatis.services;
 
+import cn.koala.mybatis.AuditModel;
 import cn.koala.mybatis.IdModel;
 import cn.koala.mybatis.SystemModel;
 import cn.koala.mybatis.YesNo;
@@ -7,9 +8,11 @@ import cn.koala.mybatis.repositories.BaseRepository;
 import lombok.Getter;
 import org.springframework.util.Assert;
 
+import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * 基础智能服务抽象类
@@ -19,16 +22,19 @@ import java.util.function.Function;
  * @author Houtaroy
  */
 @Getter
-public abstract class BaseSmartService<T extends IdModel<ID>, ID> extends BaseService<T, ID> {
+public abstract class BaseSmartService<T extends IdModel<ID>, ID, USER_ID> extends BaseService<T, ID> {
   protected final Function<T, ID> idBuilder;
+  protected final Supplier<USER_ID> currentUserIdSupplier;
 
   public BaseSmartService(BaseRepository<T, ID> repository) {
-    this(repository, (T entity) -> null);
+    this(repository, (T entity) -> null, () -> null);
   }
 
-  public BaseSmartService(BaseRepository<T, ID> repository, Function<T, ID> idBuilder) {
+  public BaseSmartService(BaseRepository<T, ID> repository, Function<T, ID> idBuilder,
+                          Supplier<USER_ID> currentUserIdSupplier) {
     super(repository);
     this.idBuilder = idBuilder;
+    this.currentUserIdSupplier = currentUserIdSupplier;
   }
 
   @Override
@@ -41,8 +47,18 @@ public abstract class BaseSmartService<T extends IdModel<ID>, ID> extends BaseSe
     Optional<T> persist = repository.findById(entity.getId());
     if (persist.isEmpty()) {
       entity.setIdIfAbsent(idBuilder.apply(entity));
+      if (entity instanceof AuditModel<?>) {
+        AuditModel<USER_ID> auditModel = (AuditModel<USER_ID>) entity;
+        auditModel.setCreateUserId(currentUserIdSupplier.get());
+        auditModel.setCreateTime(LocalDateTime.now());
+      }
     } else {
       Assert.isTrue(isNotSystem(persist.get()), "系统数据不允许修改");
+      if (entity instanceof AuditModel<?>) {
+        AuditModel<USER_ID> auditModel = (AuditModel<USER_ID>) entity;
+        auditModel.setLastUpdateUserId(currentUserIdSupplier.get());
+        auditModel.setLastUpdateTime(LocalDateTime.now());
+      }
     }
     Function<T, Integer> operation = persist.isEmpty() ? repository::add : repository::update;
     if (operation.apply(entity) != 1) {
@@ -53,6 +69,11 @@ public abstract class BaseSmartService<T extends IdModel<ID>, ID> extends BaseSe
   @Override
   public <S extends T> void delete(S entity) {
     Assert.isTrue(isNotSystem(findById(entity.getId())), "系统数据不允许修改");
+    if (entity instanceof AuditModel<?>) {
+      AuditModel<USER_ID> auditModel = (AuditModel<USER_ID>) entity;
+      auditModel.setDeleteUserId(currentUserIdSupplier.get());
+      auditModel.setDeleteTime(LocalDateTime.now());
+    }
     if (repository.delete(entity) != 1) {
       throw new IllegalStateException("数据处理异常");
     }
