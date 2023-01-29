@@ -17,10 +17,9 @@ public interface AuditModel<ID> {
   /**
    * 设置创建用户ID
    *
-   * @param id  创建用户ID
-   * @param <S> 创建用户ID类型
+   * @param id 创建用户ID
    */
-  <S extends ID> void setCreateUserId(S id);
+  void setCreateUserId(ID id);
 
   /**
    * 获取最后更新用户ID
@@ -32,10 +31,9 @@ public interface AuditModel<ID> {
   /**
    * 设置最后更新用户ID
    *
-   * @param id  最后更新用户ID
-   * @param <S> 最后更新用户ID类型
+   * @param id 最后更新用户ID
    */
-  <S extends ID> void setLastUpdateUserId(S id);
+  void setLastUpdateUserId(ID id);
 
   /**
    * 获取删除用户ID
@@ -47,8 +45,7 @@ public interface AuditModel<ID> {
   /**
    * 设置删除用户ID
    *
-   * @param id  删除用户ID
-   * @param <S> 删除用户ID类型
+   * @param id 删除用户ID
    */
-  <S extends ID> void setDeleteUserId(S id);
+  void setDeleteUserId(ID id);
 }

@@ -11,12 +11,12 @@ public interface SortModel {
    *
    * @return 排序索引
    */
-  Integer getSortIndex();
+  Long getSortIndex();
 
   /**
    * 设置排序索引
    *
    * @param sortIndex 排序索引
    */
-  void setSortIndex(Integer sortIndex);
+  void setSortIndex(Long sortIndex);
 }
