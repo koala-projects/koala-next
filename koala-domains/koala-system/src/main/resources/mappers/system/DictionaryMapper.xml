@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.koala.system.repositories.DictionaryRepository">
+
+  <sql id="selectDictionary">
+    select t.id,
+           t.code,
+           t.name,
+           t.remark,
+           t.is_enable,
+           t.is_system,
+           t.is_delete,
+           createUser.id,
+           createUser.name,
+           t.create_time,
+           lastUpdateUser.id,
+           lastUpdateUser.name,
+           t.last_update_time,
+           deleteUser.id,
+           deleteUser.name,
+           t.delete_time
+    from system_dictionary t
+           left join system_user createUser on t.create_user_id = createUser.id
+           left join system_user lastUpdateUser on t.last_update_user_id = lastUpdateUser.id
+           left join system_user deleteUser on t.delete_user_id = deleteUser.id
+  </sql>
+
+  <select id="findAll" resultType="cn.koala.system.entities.DictionaryEntity">
+    <include refid="selectDictionary"/>
+    <where>
+      t.is_delete = ${@cn.koala.mybatis.YesNo@NO.value}
+      <if test="parameters.code != null and parameters.code != ''">
+        and t.code like concat(#{parameters.code}, '%')
+      </if>
+      <if test="parameters.name != null and parameters.name != ''">
+        and t.name like concat(#{parameters.name}, '%')
+      </if>
+    </where>
+  </select>
+
+  <select id="findById" resultType="cn.koala.system.entities.DictionaryEntity">
+    <include refid="selectDictionary"/>
+    where t.is_delete = ${@cn.koala.mybatis.YesNo@NO.value} and t.id = #{id}
+  </select>
+
+  <insert id="add" parameterType="cn.koala.system.entities.DictionaryEntity">
+    insert into t_dictionary(id, code, name, remark, create_user_id, create_time)
+    values (#{id}, #{code}, #{name}, #{remark}.#{createUser.id}, #{createTime})
+  </insert>
+
+  <update id="update" parameterType="cn.koala.system.entities.DictionaryEntity">
+    update t_dictionary
+    <trim prefix="set" suffixOverrides=",">
+      <if test="code != null">code=#{code},</if>
+      <if test="name != null">name=#{name},</if>
+      <if test="remark != null">remark=#{remark},</if>
+      last_update_user_id = #{lastUpdateUser.id},
+      last_update_time = #{lastUpdateTime},
+    </trim>
+    where is_delete = ${@cn.koala.mybatis.YesNo@NO.value} and id=#{id}
+  </update>
+
+  <update id="delete" parameterType="cn.koala.system.entities.DictionaryEntity">
+    update t_dictionary
+    set is_delete      = ${@cn.koala.mybatis.YesNo@YES.value},
+        delete_user_id = #{deleteUser.id},
+        delete_time    = #{deleteTime}
+    where id = #{id}
+  </update>
+</mapper>
