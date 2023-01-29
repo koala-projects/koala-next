@@ -70,6 +70,12 @@
         <artifactId>slf4j-api</artifactId>
         <version>${slf4j.version}</version>
       </dependency>
+      <!--考拉-->
+      <dependency>
+        <groupId>cn.koala</groupId>
+        <artifactId>koala-mybatis</artifactId>
+        <version>${revision}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
