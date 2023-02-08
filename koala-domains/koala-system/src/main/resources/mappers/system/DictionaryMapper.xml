@@ -12,13 +12,13 @@
            t.is_system,
            t.is_delete,
            createUser.id,
-           createUser.name,
+           createUser.nickname,
            t.create_time,
            lastUpdateUser.id,
-           lastUpdateUser.name,
+           lastUpdateUser.nickname,
            t.last_update_time,
            deleteUser.id,
-           deleteUser.name,
+           deleteUser.nickname,
            t.delete_time
     from system_dictionary t
            left join system_user createUser on t.create_user_id = createUser.id
@@ -45,12 +45,12 @@
   </select>
 
   <insert id="add" parameterType="cn.koala.system.entities.DictionaryEntity">
-    insert into t_dictionary(id, code, name, remark, create_user_id, create_time)
+    insert into system_dictionary(id, code, name, remark, create_user_id, create_time)
     values (#{id}, #{code}, #{name}, #{remark}.#{createUser.id}, #{createTime})
   </insert>
 
   <update id="update" parameterType="cn.koala.system.entities.DictionaryEntity">
-    update t_dictionary
+    update system_dictionary
     <trim prefix="set" suffixOverrides=",">
       <if test="code != null">code=#{code},</if>
       <if test="name != null">name=#{name},</if>
@@ -62,7 +62,7 @@
   </update>
 
   <update id="delete" parameterType="cn.koala.system.entities.DictionaryEntity">
-    update t_dictionary
+    update system_dictionary
     set is_delete      = ${@cn.koala.mybatis.YesNo@YES.value},
         delete_user_id = #{deleteUser.id},
         delete_time    = #{deleteTime}

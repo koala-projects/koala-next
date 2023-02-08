@@ -13,4 +13,19 @@ import cn.koala.mybatis.SystemModel;
  * @author Houtaroy
  */
 public interface User extends IdModel<Long>, SortModel, EnableModel, SystemModel, LogicDeleteModel, AuditModel<Long> {
+  String getUsername();
+
+  String getPassword();
+
+  void setPassword(String password);
+
+  String getNickname();
+
+  String getAvatar();
+
+  String getEmail();
+
+  String getMobile();
+
+  String getRemark();
 }
