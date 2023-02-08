@@ -3,12 +3,13 @@ package cn.koala.system.services;
 import cn.koala.mybatis.YesNo;
 import cn.koala.system.User;
 import cn.koala.system.repositories.UserDetailsRepository;
+import cn.koala.system.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 
 /**
@@ -26,14 +27,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     if (user.isEmpty()) {
       throw new UsernameNotFoundException("未找到指定用户");
     }
-    return new org.springframework.security.core.userdetails.User(
+    return new UserDetailsImpl(
+      user.get().getId(),
       user.get().getUsername(),
       user.get().getPassword(),
       user.get().getIsEnable() == YesNo.YES,
-      true,
-      true,
-      true,
-      List.of()
+      new ArrayList<>()
     );
   }
 }

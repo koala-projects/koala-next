@@ -1,7 +1,11 @@
 package cn.koala.system.autoconfigure;
 
 import cn.koala.system.repositories.UserDetailsRepository;
+import cn.koala.system.security.UserDetailsImpl;
+import cn.koala.system.security.UserDetailsImplMixin;
 import cn.koala.system.services.UserDetailsServiceImpl;
+import com.fasterxml.jackson.databind.Module;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
@@ -11,11 +15,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.jackson2.SecurityJackson2Modules;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
@@ -29,6 +35,7 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
+import org.springframework.security.oauth2.server.authorization.jackson2.OAuth2AuthorizationServerJackson2Module;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 import org.springframework.security.web.SecurityFilterChain;
@@ -38,6 +45,7 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -108,7 +116,21 @@ public class SecurityAutoConfiguration {
   @Bean
   public OAuth2AuthorizationService authorizationService(JdbcTemplate jdbcTemplate,
                                                          RegisteredClientRepository registeredClientRepository) {
-    return new JdbcOAuth2AuthorizationService(jdbcTemplate, registeredClientRepository);
+    JdbcOAuth2AuthorizationService service = new JdbcOAuth2AuthorizationService(jdbcTemplate,
+      registeredClientRepository);
+    JdbcOAuth2AuthorizationService.OAuth2AuthorizationRowMapper authorizationRowMapper =
+      new JdbcOAuth2AuthorizationService.OAuth2AuthorizationRowMapper(registeredClientRepository);
+    authorizationRowMapper.setLobHandler(new DefaultLobHandler());
+    ObjectMapper objectMapper = new ObjectMapper();
+    ClassLoader classLoader = JdbcOAuth2AuthorizationService.class.getClassLoader();
+    List<Module> securityModules = SecurityJackson2Modules.getModules(classLoader);
+    objectMapper.registerModules(securityModules);
+    objectMapper.registerModule(new OAuth2AuthorizationServerJackson2Module());
+    // 增加UserDetails实现混入
+    objectMapper.addMixIn(UserDetailsImpl.class, UserDetailsImplMixin.class);
+    authorizationRowMapper.setObjectMapper(objectMapper);
+    service.setAuthorizationRowMapper(authorizationRowMapper);
+    return service;
   }
 
   @Bean
