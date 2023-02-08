@@ -20,6 +20,10 @@
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
     <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid-spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
       <groupId>cn.koala</groupId>
       <artifactId>koala-web</artifactId>
     </dependency>

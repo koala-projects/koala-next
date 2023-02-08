@@ -10,7 +10,7 @@ import lombok.Getter;
 @Getter
 public enum YesNo implements EnhancedEnum {
   YES("是", 1),
-  NO("否", 2);
+  NO("否", 0);
 
   private final String name;
   private final int value;
