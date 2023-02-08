@@ -23,5 +23,13 @@
       <groupId>cn.koala</groupId>
       <artifactId>koala-mybatis</artifactId>
     </dependency>
+    <dependency>
+      <groupId>cn.koala</groupId>
+      <artifactId>koala-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>cn.koala</groupId>
+      <artifactId>koala-open-api</artifactId>
+    </dependency>
   </dependencies>
 </project>

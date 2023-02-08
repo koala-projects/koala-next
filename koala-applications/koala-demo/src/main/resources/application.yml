@@ -57,4 +57,4 @@ logging:
     cn.koala: debug
     org.springframework.security: debug
   file:
-    name: logs/system-application.log
+    name: logs/koala-demo.log

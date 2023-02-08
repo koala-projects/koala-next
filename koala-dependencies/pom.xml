@@ -17,13 +17,13 @@
   <properties>
     <!--Spring相关-->
     <spring-boot.version>3.0.2</spring-boot.version>
-    <springdoc-openapi-ui.version>1.6.14</springdoc-openapi-ui.version>
+    <springdoc-openapi-starter-webmvc-ui.version>2.0.2</springdoc-openapi-starter-webmvc-ui.version>
     <spring-security-oauth2-authorization-server.version>1.0.0</spring-security-oauth2-authorization-server.version>
     <!--MyBatis相关-->
     <mybatis.version>3.5.11</mybatis.version>
     <mybatis-spring-boot-starter.version>3.0.1</mybatis-spring-boot-starter.version>
     <pagehelper.version>5.3.1</pagehelper.version>
-    <pagehelper-spring-boot-starter.version>1.4.3</pagehelper-spring-boot-starter.version>
+    <pagehelper-spring-boot-starter.version>1.4.6</pagehelper-spring-boot-starter.version>
     <!--其他依赖-->
     <junit.version>5.8.2</junit.version>
     <slf4j.version>2.0.6</slf4j.version>
@@ -52,8 +52,8 @@
       <!--Spring相关-->
       <dependency>
         <groupId>org.springdoc</groupId>
-        <artifactId>springdoc-openapi-ui</artifactId>
-        <version>${springdoc-openapi-ui.version}</version>
+        <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+        <version>${springdoc-openapi-starter-webmvc-ui.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework.security</groupId>
@@ -75,6 +75,11 @@
         <groupId>org.mybatis.spring.boot</groupId>
         <artifactId>mybatis-spring-boot-starter</artifactId>
         <version>${mybatis-spring-boot-starter.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.pagehelper</groupId>
+        <artifactId>pagehelper-spring-boot-starter</artifactId>
+        <version>${pagehelper-spring-boot-starter.version}</version>
       </dependency>
       <!--其他-->
       <dependency>
