@@ -71,10 +71,8 @@ public class SecurityAutoConfiguration {
   @Order(2)
   public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http)
     throws Exception {
-    http
-      .authorizeHttpRequests((authorize) -> authorize
-        .anyRequest().authenticated()
-      )
+    http.authorizeHttpRequests().requestMatchers("/swagger*/**", "/v3/api-docs/**").permitAll();
+    http.authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated())
       // Form login handles the redirect to the login page from the
       // authorization server filter chain
       .formLogin(Customizer.withDefaults());
@@ -95,6 +93,7 @@ public class SecurityAutoConfiguration {
       .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
       .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
       .redirectUri("http://127.0.0.1:3000")
+      .redirectUri("http://127.0.0.1:9000/swagger-ui/oauth2-redirect.html")
       .scope(OidcScopes.OPENID)
       .scope(OidcScopes.PROFILE)
       .scope("all")
