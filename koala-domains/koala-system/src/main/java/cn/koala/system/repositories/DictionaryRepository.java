@@ -1,6 +1,6 @@
 package cn.koala.system.repositories;
 
-import cn.koala.mybatis.repositories.BaseRepository;
+import cn.koala.mybatis.CrudRepository;
 import cn.koala.system.Dictionary;
 
 /**
@@ -8,5 +8,5 @@ import cn.koala.system.Dictionary;
  *
  * @author Houtaroy
  */
-public interface DictionaryRepository extends BaseRepository<Dictionary, Long> {
+public interface DictionaryRepository extends CrudRepository<Dictionary, Long> {
 }

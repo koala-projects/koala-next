@@ -1,8 +1,13 @@
 package cn.koala.system.autoconfigure;
 
+import cn.koala.system.apis.DictionaryApi;
+import cn.koala.system.apis.DictionaryApiImpl;
 import cn.koala.system.apis.UserApi;
 import cn.koala.system.apis.UserApiImpl;
+import cn.koala.system.repositories.DictionaryRepository;
 import cn.koala.system.repositories.UserRepository;
+import cn.koala.system.services.DictionaryService;
+import cn.koala.system.services.DictionaryServiceImpl;
 import cn.koala.system.services.UserService;
 import cn.koala.system.services.UserServiceImpl;
 import org.mybatis.spring.annotation.MapperScan;
@@ -35,5 +40,15 @@ public class SystemAutoConfiguration {
   @Bean
   public UserApi userApi(UserService userService) {
     return new UserApiImpl(userService);
+  }
+
+  @Bean
+  public DictionaryService dictionaryService(DictionaryRepository dictionaryRepository) {
+    return new DictionaryServiceImpl(dictionaryRepository);
+  }
+
+  @Bean
+  public DictionaryApi dictionaryApi(DictionaryService dictionaryService) {
+    return new DictionaryApiImpl(dictionaryService);
   }
 }

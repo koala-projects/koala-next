@@ -1,6 +1,6 @@
 package cn.koala.system.repositories;
 
-import cn.koala.mybatis.repositories.BaseRepository;
+import cn.koala.mybatis.CrudRepository;
 import cn.koala.system.User;
 
 /**
@@ -8,6 +8,6 @@ import cn.koala.system.User;
  *
  * @author Houtaroy
  */
-public interface UserRepository extends BaseRepository<User, Long> {
-  
+public interface UserRepository extends CrudRepository<User, Long> {
+
 }

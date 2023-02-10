@@ -22,6 +22,6 @@ public class UserApiImpl implements UserApi {
 
   @Override
   public DataResponse<Page<User>> page(Map<String, Object> parameters, Pageable pageable) {
-    return DataResponse.ok(service.findAll(parameters, pageable));
+    return DataResponse.ok(service.page(parameters, pageable));
   }
 }

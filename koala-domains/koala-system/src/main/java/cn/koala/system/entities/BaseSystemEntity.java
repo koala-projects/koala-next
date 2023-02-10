@@ -1,11 +1,9 @@
 package cn.koala.system.entities;
 
 import cn.koala.mybatis.AuditModel;
-import cn.koala.mybatis.EnableModel;
 import cn.koala.mybatis.IdModel;
-import cn.koala.mybatis.LogicDeleteModel;
 import cn.koala.mybatis.SortModel;
-import cn.koala.mybatis.SystemModel;
+import cn.koala.mybatis.StateModel;
 import cn.koala.mybatis.YesNo;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,8 +22,7 @@ import java.util.function.Supplier;
 @Data
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
-public abstract class BaseSystemEntity implements IdModel<Long>, SortModel, EnableModel, SystemModel, LogicDeleteModel,
-  AuditModel<Long> {
+public abstract class BaseSystemEntity implements IdModel<Long>, SortModel, StateModel, AuditModel<Long> {
   protected Long id;
   protected Long sortIndex;
   protected YesNo isEnable;
