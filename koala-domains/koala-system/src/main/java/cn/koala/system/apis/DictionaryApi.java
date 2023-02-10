@@ -71,7 +71,7 @@ public interface DictionaryApi {
   )
   @Parameter(in = ParameterIn.PATH, name = "id", description = "字典id", schema = @Schema(type = "string"))
   @GetMapping("{id}")
-  DataResponse<Dictionary> loadById(@PathVariable("id") Long id);
+  DataResponse<Dictionary> load(@PathVariable("id") Long id);
 
   /**
    * 创建字典
@@ -85,7 +85,7 @@ public interface DictionaryApi {
     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = DictionaryResult.class))}
   )
   @PostMapping
-  DataResponse<Dictionary> create(@RequestBody DictionaryEntity entity);
+  DataResponse<Dictionary> add(@RequestBody DictionaryEntity entity);
 
   /**
    * 更新字典

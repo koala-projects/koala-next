@@ -28,20 +28,20 @@ public class DictionaryApiImpl implements DictionaryApi {
   }
 
   @Override
-  public DataResponse<Dictionary> loadById(Long id) {
+  public DataResponse<Dictionary> load(Long id) {
     return DataResponse.ok(service.load(id));
   }
 
   @Override
-  public DataResponse<Dictionary> create(DictionaryEntity entity) {
-    service.add(entity);
+  public DataResponse<Dictionary> add(DictionaryEntity entity) {
+    service.save(entity);
     return DataResponse.ok(entity);
   }
 
   @Override
   public Response update(Long id, DictionaryEntity entity) {
-    entity.setId(id);
-    service.update(entity);
+    entity.setIdIfAbsent(id);
+    service.save(entity);
     return Response.SUCCESS;
   }
 

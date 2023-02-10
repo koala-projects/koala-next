@@ -16,19 +16,13 @@
            t.is_enable,
            t.is_system,
            t.is_delete,
-           createUser.id,
-           createUser.nickname,
+           t.create_user_id,
            t.create_time,
-           lastUpdateUser.id,
-           lastUpdateUser.nickname,
+           t.last_update_user_id,
            t.last_update_time,
-           deleteUser.id,
-           deleteUser.nickname,
+           t.delete_user_id,
            t.delete_time
     from system_user t
-           left join system_user createUser on t.create_user_id = createUser.id
-           left join system_user lastUpdateUser on t.last_update_user_id = lastUpdateUser.id
-           left join system_user deleteUser on t.delete_user_id = deleteUser.id
     where t.is_delete = ${@cn.koala.mybatis.YesNo@NO.value}
       and t.username = #{username}
   </select>
