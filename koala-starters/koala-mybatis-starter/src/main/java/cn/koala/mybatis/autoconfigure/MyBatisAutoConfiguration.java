@@ -1,6 +1,6 @@
 package cn.koala.mybatis.autoconfigure;
 
-import cn.koala.mybatis.handlers.EnhancedEnumTypeHandler;
+import cn.koala.mybatis.EnhancedEnumTypeHandler;
 import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
