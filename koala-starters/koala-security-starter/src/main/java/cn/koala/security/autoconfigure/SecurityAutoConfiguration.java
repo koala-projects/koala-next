@@ -1,11 +1,11 @@
-package cn.koala.system.autoconfigure;
+package cn.koala.security.autoconfigure;
 
 import cn.koala.mybatis.AuditorIdSupplier;
-import cn.koala.system.repositories.UserDetailsRepository;
-import cn.koala.system.security.SecurityHelper;
-import cn.koala.system.security.UserDetailsImpl;
-import cn.koala.system.security.UserDetailsImplMixin;
-import cn.koala.system.services.UserDetailsServiceImpl;
+import cn.koala.security.SecurityHelper;
+import cn.koala.security.UserDetailsImpl;
+import cn.koala.security.UserDetailsImplMixin;
+import cn.koala.security.UserDetailsServiceImpl;
+import cn.koala.security.repositories.UserDetailsRepository;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -13,6 +13,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -57,6 +58,7 @@ import java.util.UUID;
  * @author Houtaroy
  */
 @Configuration
+@MapperScan("cn.koala.security.repositories")
 public class SecurityAutoConfiguration {
   @Bean
   @Order(1)
@@ -181,7 +183,7 @@ public class SecurityAutoConfiguration {
   public AuthorizationServerSettings authorizationServerSettings() {
     return AuthorizationServerSettings.builder().build();
   }
-  
+
   @Bean
   @ConditionalOnMissingBean
   public AuditorIdSupplier<?> auditorIdSupplier() {

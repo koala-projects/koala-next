@@ -16,7 +16,7 @@
   <dependencies>
     <dependency>
       <groupId>cn.koala</groupId>
-      <artifactId>koala-mybatis-starter</artifactId>
+      <artifactId>koala-security-starter</artifactId>
     </dependency>
     <dependency>
       <groupId>cn.koala</groupId>

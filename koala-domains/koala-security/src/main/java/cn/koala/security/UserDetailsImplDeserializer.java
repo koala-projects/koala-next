@@ -1,5 +1,6 @@
-package cn.koala.system.security;
+package cn.koala.security;
 
+import cn.koala.mybatis.YesNo;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -32,8 +33,14 @@ public class UserDetailsImplDeserializer extends JsonDeserializer<UserDetailsImp
     Long id = readJsonNode(jsonNode, "id").asLong();
     String username = readJsonNode(jsonNode, "username").asText();
     String password = readJsonNode(jsonNode, "password").asText("");
-    boolean enabled = readJsonNode(jsonNode, "enabled").asBoolean();
-    return new UserDetailsImpl(id, username, password, enabled, authorities);
+    YesNo isEnable = YesNo.valueOf(readJsonNode(jsonNode, "isEnable").asText("NO"));
+    return UserDetailsImpl.builder()
+      .id(id)
+      .username(username)
+      .password(password)
+      .isEnable(isEnable)
+      .authorities(authorities)
+      .build();
   }
 
   private JsonNode readJsonNode(JsonNode jsonNode, String field) {

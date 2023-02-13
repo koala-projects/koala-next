@@ -42,7 +42,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  *
  * @author Houtaroy
  */
-@Import({SecurityAutoConfiguration.class, SwaggerAutoConfiguration.class})
+@Import({SwaggerAutoConfiguration.class})
 @Configuration
 @MapperScan(basePackages = "cn.koala.system.repositories")
 public class SystemAutoConfiguration {

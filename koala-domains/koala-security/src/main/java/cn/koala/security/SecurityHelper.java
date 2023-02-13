@@ -1,4 +1,4 @@
-package cn.koala.system.security;
+package cn.koala.security;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 

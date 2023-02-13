@@ -1,6 +1,6 @@
-package cn.koala.system.repositories;
+package cn.koala.security.repositories;
 
-import cn.koala.system.User;
+import cn.koala.security.UserDetailsImpl;
 
 import java.util.Optional;
 
@@ -16,5 +16,5 @@ public interface UserDetailsRepository {
    * @param username 用户名
    * @return 数据实体
    */
-  Optional<User> findByUsername(String username);
+  Optional<UserDetailsImpl> findByUsername(String username);
 }

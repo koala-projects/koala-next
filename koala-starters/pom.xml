@@ -16,6 +16,7 @@
 
   <modules>
     <module>koala-mybatis-starter</module>
+    <module>koala-security-starter</module>
     <module>koala-system-starter</module>
     <module>koala-web-starter</module>
   </modules>

@@ -95,6 +95,11 @@
       <!--考拉-->
       <dependency>
         <groupId>cn.koala</groupId>
+        <artifactId>koala-security</artifactId>
+        <version>${revision}</version>
+      </dependency>
+      <dependency>
+        <groupId>cn.koala</groupId>
         <artifactId>koala-system</artifactId>
         <version>${revision}</version>
       </dependency>
@@ -121,6 +126,11 @@
       <dependency>
         <groupId>cn.koala</groupId>
         <artifactId>koala-mybatis-starter</artifactId>
+        <version>${revision}</version>
+      </dependency>
+      <dependency>
+        <groupId>cn.koala</groupId>
+        <artifactId>koala-security-starter</artifactId>
         <version>${revision}</version>
       </dependency>
       <dependency>
