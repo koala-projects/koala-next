@@ -6,6 +6,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.util.Optional;
+
 /**
  * UserDetailsService实现
  *
@@ -17,11 +19,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    Optional<UserDetailsImpl> user = repository.findByUsername(username);
+    if (user.isEmpty()) {
+      throw new UsernameNotFoundException("未找到指定用户");
+    }
     return repository.findByUsername(username).orElse(null);
-    // Optional<UserDetailsImpl> user = repository.findByUsername(username);
-    // if (user.isEmpty()) {
-    //   throw new UsernameNotFoundException("未找到指定用户");
-    // }
     // return new UserDetailsImpl(
     //   user.get().getId(),
     //   user.get().getUsername(),

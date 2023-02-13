@@ -39,7 +39,7 @@ public interface UserApi {
    * @param pageable   分页条件
    * @return 用户列表
    */
-  @PreAuthorize("hasAuthority('SCOPE_user.read')")
+  @PreAuthorize("hasAuthority('system:user:page')")
   @Operation(summary = "根据条件分页查询用户")
   @ApiResponse(responseCode = "200", description = "成功",
     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = UserPageResult.class))}

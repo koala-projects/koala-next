@@ -1,6 +1,7 @@
 package cn.koala.security.autoconfigure;
 
 import cn.koala.mybatis.AuditorIdSupplier;
+import cn.koala.security.SecurityExceptionHandler;
 import cn.koala.security.SecurityHelper;
 import cn.koala.security.UserDetailsImpl;
 import cn.koala.security.UserDetailsImplMixin;
@@ -21,6 +22,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -58,6 +60,7 @@ import java.util.UUID;
  * @author Houtaroy
  */
 @Configuration
+@EnableMethodSecurity
 @MapperScan("cn.koala.security.repositories")
 public class SecurityAutoConfiguration {
   @Bean
@@ -188,5 +191,10 @@ public class SecurityAutoConfiguration {
   @ConditionalOnMissingBean
   public AuditorIdSupplier<?> auditorIdSupplier() {
     return SecurityHelper::getCurrentUserId;
+  }
+
+  @Bean
+  public SecurityExceptionHandler securityExceptionHandler() {
+    return new SecurityExceptionHandler();
   }
 }

@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 public class Response {
   public static final Response SUCCESS = new Response(HttpStatus.OK.value(), "请求成功");
+  public static final Response FORBIDDEN = new Response(HttpStatus.FORBIDDEN.value(), "无访问权限");
 
   protected Integer code;
   protected String message;

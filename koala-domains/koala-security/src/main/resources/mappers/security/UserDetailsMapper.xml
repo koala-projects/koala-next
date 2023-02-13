@@ -3,12 +3,26 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.koala.security.repositories.UserDetailsRepository">
 
-  <select id="findByUsername" resultType="cn.koala.security.UserDetailsImpl">
+  <resultMap id="userDetailsResultMap" type="cn.koala.security.UserDetailsImpl">
+    <id property="id" column="id"/>
+    <result property="username" column="username"/>
+    <result property="password" column="password"/>
+    <result property="isEnable" column="is_enable"/>
+    <collection property="permissionCodes" ofType="java.lang.String">
+      <result column="permission.code"/>
+    </collection>
+  </resultMap>
+
+  <select id="findByUsername" resultMap="userDetailsResultMap">
     select t.id,
            t.username,
            t.password,
-           t.is_enable
+           t.is_enable,
+           p.code as "permission.code"
     from system_user t
+           left join system_user_role ur on ur.user_id = t.id
+           left join system_role_permission rp on rp.role_id = ur.role_id
+           left join system_permission p on rp.permission_id = p.id
     where t.is_delete = ${@cn.koala.mybatis.YesNo@NO.value}
       and t.username = #{username}
   </select>

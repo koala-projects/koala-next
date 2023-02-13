@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.MissingNode;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.io.IOException;
@@ -28,7 +27,7 @@ public class UserDetailsImplDeserializer extends JsonDeserializer<UserDetailsImp
     throws IOException {
     ObjectMapper mapper = (ObjectMapper) jsonParser.getCodec();
     JsonNode jsonNode = mapper.readTree(jsonParser);
-    Set<? extends GrantedAuthority> authorities = mapper.convertValue(jsonNode.get("authorities"),
+    Set<SimpleGrantedAuthority> authorities = mapper.convertValue(jsonNode.get("authorities"),
       SIMPLE_GRANTED_AUTHORITY_SET);
     Long id = readJsonNode(jsonNode, "id").asLong();
     String username = readJsonNode(jsonNode, "username").asText();
