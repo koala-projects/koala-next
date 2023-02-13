@@ -1,14 +1,19 @@
 package cn.koala.system.autoconfigure;
 
+import cn.koala.system.apis.DepartmentApi;
+import cn.koala.system.apis.DepartmentApiImpl;
 import cn.koala.system.apis.DictionaryApi;
 import cn.koala.system.apis.DictionaryApiImpl;
 import cn.koala.system.apis.DictionaryItemApi;
 import cn.koala.system.apis.DictionaryItemApiImpl;
 import cn.koala.system.apis.UserApi;
 import cn.koala.system.apis.UserApiImpl;
+import cn.koala.system.repositories.DepartmentRepository;
 import cn.koala.system.repositories.DictionaryItemRepository;
 import cn.koala.system.repositories.DictionaryRepository;
 import cn.koala.system.repositories.UserRepository;
+import cn.koala.system.services.DepartmentService;
+import cn.koala.system.services.DepartmentServiceImpl;
 import cn.koala.system.services.DictionaryItemService;
 import cn.koala.system.services.DictionaryItemServiceImpl;
 import cn.koala.system.services.DictionaryService;
@@ -72,5 +77,17 @@ public class SystemAutoConfiguration {
   @ConditionalOnMissingBean
   public DictionaryItemApi dictionaryItemApi(DictionaryItemService dictionaryItemService) {
     return new DictionaryItemApiImpl(dictionaryItemService);
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public DepartmentService departmentService(DepartmentRepository departmentRepository) {
+    return new DepartmentServiceImpl(departmentRepository);
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public DepartmentApi departmentApi(DepartmentService departmentService) {
+    return new DepartmentApiImpl(departmentService);
   }
 }

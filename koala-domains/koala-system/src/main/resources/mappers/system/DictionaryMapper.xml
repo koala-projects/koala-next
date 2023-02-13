@@ -22,7 +22,7 @@
 
   <insert id="insert" parameterType="cn.koala.system.entities.DictionaryEntity">
     insert into system_dictionary(id, code, name, remark, create_user_id, create_time)
-    values (#{id}, #{code}, #{name}, #{remark}.#{createUserId}, #{createTime})
+    values (#{id}, #{code}, #{name}, #{remark}, #{createUserId}, #{createTime})
   </insert>
 
   <update id="deleteById" parameterType="cn.koala.system.entities.DictionaryEntity">
