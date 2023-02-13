@@ -1,5 +1,6 @@
 package cn.koala.mybatis;
 
+import cn.koala.toolkit.DateHelper;
 import com.github.pagehelper.PageHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -7,7 +8,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.util.Assert;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -39,7 +39,7 @@ public abstract class BaseService<T extends IdModel<ID>, ID> implements CrudServ
     }
     if (entity instanceof AuditModel<?> audit) {
       audit.setCreateUserId(CrudHelper.getAuditorId());
-      audit.setCreateTime(LocalDateTime.now());
+      audit.setCreateTime(DateHelper.now());
     }
     repository.insert(entity);
   }
@@ -50,7 +50,7 @@ public abstract class BaseService<T extends IdModel<ID>, ID> implements CrudServ
     Assert.isTrue(nonSystem(persist), "系统数据不允许删除");
     if (entity instanceof AuditModel<?> audit) {
       audit.setDeleteUserId(CrudHelper.getAuditorId());
-      audit.setDeleteTime(LocalDateTime.now());
+      audit.setDeleteTime(DateHelper.now());
     }
     repository.deleteById(entity.getId());
   }
@@ -66,7 +66,7 @@ public abstract class BaseService<T extends IdModel<ID>, ID> implements CrudServ
     }
     if (entity instanceof AuditModel<?> audit) {
       audit.setLastUpdateUserId(CrudHelper.getAuditorId());
-      audit.setLastUpdateTime(LocalDateTime.now());
+      audit.setLastUpdateTime(DateHelper.now());
     }
     repository.updateById(entity);
   }

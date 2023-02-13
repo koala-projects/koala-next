@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * 基础系统数据实体抽象类
@@ -26,9 +26,9 @@ public abstract class BaseSystemEntity implements IdModel<Long>, SortModel, Stat
   protected YesNo isSystem;
   protected YesNo isDelete;
   protected Long createUserId;
-  protected LocalDateTime createTime;
+  protected Date createTime;
   protected Long lastUpdateUserId;
-  protected LocalDateTime lastUpdateTime;
+  protected Date lastUpdateTime;
   protected Long deleteUserId;
-  protected LocalDateTime deleteTime;
+  protected Date deleteTime;
 }

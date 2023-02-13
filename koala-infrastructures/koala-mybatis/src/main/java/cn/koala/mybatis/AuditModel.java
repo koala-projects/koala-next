@@ -1,6 +1,6 @@
 package cn.koala.mybatis;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * 审计模型
@@ -28,14 +28,14 @@ public interface AuditModel<ID> {
    *
    * @return 创建时间
    */
-  LocalDateTime getCreateTime();
+  Date getCreateTime();
 
   /**
    * 设置创建时间
    *
    * @param createTime 创建时间
    */
-  void setCreateTime(LocalDateTime createTime);
+  void setCreateTime(Date createTime);
 
   /**
    * 获取最后更新用户ID
@@ -56,14 +56,14 @@ public interface AuditModel<ID> {
    *
    * @return 最后更新时间
    */
-  LocalDateTime getLastUpdateTime();
+  Date getLastUpdateTime();
 
   /**
    * 设置最后更新时间
    *
    * @param lastUpdateTime 最后更新时间
    */
-  void setLastUpdateTime(LocalDateTime lastUpdateTime);
+  void setLastUpdateTime(Date lastUpdateTime);
 
   /**
    * 获取删除用户ID
@@ -84,12 +84,12 @@ public interface AuditModel<ID> {
    *
    * @return 删除时间
    */
-  LocalDateTime getDeleteTime();
+  Date getDeleteTime();
 
   /**
    * 设置删除时间
    *
    * @param deleteTime 删除时间
    */
-  void setDeleteTime(LocalDateTime deleteTime);
+  void setDeleteTime(Date deleteTime);
 }

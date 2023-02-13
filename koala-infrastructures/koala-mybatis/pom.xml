@@ -28,5 +28,10 @@
       <groupId>org.springframework.data</groupId>
       <artifactId>spring-data-commons</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>cn.koala</groupId>
+      <artifactId>koala-toolkit</artifactId>
+    </dependency>
   </dependencies>
 </project>
