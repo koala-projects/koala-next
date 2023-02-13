@@ -4,7 +4,7 @@
   "avatar": "",
   "version": "4.3.0",
   "createdTime": "2023-1-29 08:59:43",
-  "updatedTime": "2023-2-13 14:57:42",
+  "updatedTime": "2023-2-13 15:04:38",
   "dbConns": [],
   "profile": {
     "default": {
@@ -2630,6 +2630,23 @@
           "extProps": {},
           "domain": "54611CCC-CA4B-42E1-9F32-4944C85B85A6",
           "id": "EC5ADFF8-553C-42E1-BC0F-258D3F094252"
+        },
+        {
+          "defKey": "remark",
+          "defName": "角色备注",
+          "comment": "",
+          "type": "",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "refDict": "",
+          "extProps": {},
+          "domain": "79F98B7E-549E-4EDB-959B-B2B87E962332",
+          "id": "A8EF8B0E-8FA9-4CB1-A296-703DC0F19F50"
         },
         {
           "defKey": "sort_index",

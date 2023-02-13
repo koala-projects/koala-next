@@ -8,12 +8,14 @@ import cn.koala.system.apis.DictionaryItemApi;
 import cn.koala.system.apis.DictionaryItemApiImpl;
 import cn.koala.system.apis.PermissionApi;
 import cn.koala.system.apis.PermissionApiImpl;
+import cn.koala.system.apis.RoleApiImpl;
 import cn.koala.system.apis.UserApi;
 import cn.koala.system.apis.UserApiImpl;
 import cn.koala.system.repositories.DepartmentRepository;
 import cn.koala.system.repositories.DictionaryItemRepository;
 import cn.koala.system.repositories.DictionaryRepository;
 import cn.koala.system.repositories.PermissionRepository;
+import cn.koala.system.repositories.RoleRepository;
 import cn.koala.system.repositories.UserRepository;
 import cn.koala.system.services.DepartmentService;
 import cn.koala.system.services.DepartmentServiceImpl;
@@ -23,6 +25,8 @@ import cn.koala.system.services.DictionaryService;
 import cn.koala.system.services.DictionaryServiceImpl;
 import cn.koala.system.services.PermissionService;
 import cn.koala.system.services.PermissionServiceImpl;
+import cn.koala.system.services.RoleService;
+import cn.koala.system.services.RoleServiceImpl;
 import cn.koala.system.services.UserService;
 import cn.koala.system.services.UserServiceImpl;
 import org.mybatis.spring.annotation.MapperScan;
@@ -42,24 +46,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @MapperScan(basePackages = "cn.koala.system.repositories")
 public class SystemAutoConfiguration {
-
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-  }
-
-  @Bean
-  @ConditionalOnMissingBean
-  public UserService userService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-    return new UserServiceImpl(userRepository, passwordEncoder);
-  }
-
-  @Bean
-  @ConditionalOnMissingBean
-  public UserApi userApi(UserService userService) {
-    return new UserApiImpl(userService);
-  }
-
   @Bean
   @ConditionalOnMissingBean
   public DictionaryService dictionaryService(DictionaryRepository dictionaryRepository) {
@@ -106,5 +92,34 @@ public class SystemAutoConfiguration {
   @ConditionalOnMissingBean
   public PermissionApi permissionApi(PermissionService permissionService) {
     return new PermissionApiImpl(permissionService);
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public RoleService roleService(RoleRepository roleRepository) {
+    return new RoleServiceImpl(roleRepository);
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public RoleApiImpl roleApi(RoleService roleService) {
+    return new RoleApiImpl(roleService);
+  }
+
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public UserService userService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    return new UserServiceImpl(userRepository, passwordEncoder);
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public UserApi userApi(UserService userService) {
+    return new UserApiImpl(userService);
   }
 }

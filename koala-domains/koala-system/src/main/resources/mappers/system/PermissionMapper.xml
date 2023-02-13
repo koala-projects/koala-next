@@ -3,7 +3,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.koala.system.repositories.PermissionRepository">
 
-  <sql id="selectDepartment">
+  <sql id="selectPermission">
     select t.id,
            t.code,
            t.name,
@@ -58,12 +58,12 @@
   </update>
 
   <select id="findById" resultType="cn.koala.system.entities.PermissionEntity">
-    <include refid="selectDepartment"/>
+    <include refid="selectPermission"/>
     where t.is_delete = ${@cn.koala.mybatis.YesNo@NO.value} and t.id = #{id}
   </select>
 
   <select id="findAll" resultType="cn.koala.system.entities.PermissionEntity">
-    <include refid="selectDepartment"/>
+    <include refid="selectPermission"/>
     where t.is_delete = ${@cn.koala.mybatis.YesNo@NO.value}
   </select>
 </mapper>
