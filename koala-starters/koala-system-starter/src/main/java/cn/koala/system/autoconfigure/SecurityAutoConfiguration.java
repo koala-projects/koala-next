@@ -1,6 +1,8 @@
 package cn.koala.system.autoconfigure;
 
+import cn.koala.mybatis.AuditorIdSupplier;
 import cn.koala.system.repositories.UserDetailsRepository;
+import cn.koala.system.security.SecurityHelper;
 import cn.koala.system.security.UserDetailsImpl;
 import cn.koala.system.security.UserDetailsImplMixin;
 import cn.koala.system.services.UserDetailsServiceImpl;
@@ -11,6 +13,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -177,5 +180,11 @@ public class SecurityAutoConfiguration {
   @Bean
   public AuthorizationServerSettings authorizationServerSettings() {
     return AuthorizationServerSettings.builder().build();
+  }
+  
+  @Bean
+  @ConditionalOnMissingBean
+  public AuditorIdSupplier<?> auditorIdSupplier() {
+    return SecurityHelper::getCurrentUserId;
   }
 }
