@@ -8,6 +8,7 @@
            t.code,
            t.name,
            t.remark,
+           t.dictionary_id,
            t.is_enable,
            t.is_system,
            t.is_delete,
@@ -21,8 +22,8 @@
   </sql>
 
   <insert id="insert" parameterType="cn.koala.system.entities.DictionaryItemEntity">
-    insert into system_dictionary_item(id, code, name, remark, create_user_id, create_time)
-    values (#{id}, #{code}, #{name}, #{remark}, #{createUser.id}, #{createTime})
+    insert into system_dictionary_item(id, code, name, remark, dictionary_id, create_user_id, create_time)
+    values (#{id}, #{code}, #{name}, #{remark}, #{dictionaryId}, #{createUser.id}, #{createTime})
   </insert>
 
   <update id="deleteById" parameterType="cn.koala.system.entities.DictionaryItemEntity">
@@ -59,6 +60,9 @@
       </if>
       <if test="parameters.name != null and parameters.name != ''">
         and t.name like concat(#{parameters.name}, '%')
+      </if>
+      <if test="parameters.dictionaryId != null and parameters.dictionaryId != ''">
+        and t.dictionary_id = #{parameters.dictionaryId}
       </if>
     </where>
   </select>

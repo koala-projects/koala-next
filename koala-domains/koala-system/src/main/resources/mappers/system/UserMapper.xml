@@ -61,6 +61,9 @@
 
   <select id="findAll" resultType="cn.koala.system.entities.UserEntity">
     <include refid="selectUser"/>
+    <if test="parameters.departmentId != null and parameters.departmentId != ''">
+      left join system_user_department ud on ud.user_id = t.id
+    </if>
     <where>
       t.is_delete = ${@cn.koala.mybatis.YesNo@NO.value}
       <if test="parameters.code != null and parameters.code != ''">
@@ -69,6 +72,37 @@
       <if test="parameters.name != null and parameters.name != ''">
         and t.name like concat(#{parameters.name}, '%')
       </if>
+      <if test="parameters.departmentId != null and parameters.departmentId != ''">
+        and ud.department_id = #{parameters.departmentId}
+      </if>
     </where>
   </select>
+
+  <select id="findAllRoleIdById" resultType="java.lang.Long">
+    select role_id
+    from system_user_role
+    where user_id = #{id}
+  </select>
+
+  <insert id="updateRoleIdById">
+    delete from system_user_role where user_id = #{id};
+    insert into system_user_role values
+    <foreach item="roleId" index="index" collection="roleIds" separator=",">
+      (#{id}, #{roleId})
+    </foreach>
+  </insert>
+
+  <select id="findAllDepartmentIdById" resultType="java.lang.Long">
+    select department_id
+    from system_user_department
+    where user_id = #{id}
+  </select>
+
+  <insert id="updateDepartmentIdById">
+    delete from system_user_department where user_id = #{id};
+    insert into system_user_department values
+    <foreach item="departmentId" index="index" collection="departmentIds" separator=",">
+      (#{id}, #{departmentId})
+    </foreach>
+  </insert>
 </mapper>

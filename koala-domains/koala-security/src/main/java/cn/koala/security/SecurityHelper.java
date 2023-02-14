@@ -1,6 +1,10 @@
 package cn.koala.security;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import java.util.Optional;
 
 /**
  * 安全帮助类
@@ -14,10 +18,11 @@ public abstract class SecurityHelper {
    * @return 当前操作用户ID
    */
   public static Long getCurrentUserId() {
-    Long result = null;
-    if (SecurityContextHolder.getContext().getAuthentication() instanceof UserDetailsImpl userDetails) {
-      result = userDetails.getId();
-    }
-    return result;
+    return Optional.ofNullable(SecurityContextHolder.getContext())
+      .map(SecurityContext::getAuthentication)
+      .map(Authentication::getPrincipal)
+      .filter(principal -> principal instanceof UserDetailsImpl)
+      .map(principal -> ((UserDetailsImpl) principal).getId())
+      .orElse(null);
   }
 }

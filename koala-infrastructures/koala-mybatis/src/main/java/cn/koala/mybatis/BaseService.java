@@ -52,7 +52,7 @@ public abstract class BaseService<T extends IdModel<ID>, ID> implements CrudServ
       audit.setDeleteUserId(CrudHelper.getAuditorId());
       audit.setDeleteTime(DateHelper.now());
     }
-    repository.deleteById(entity.getId());
+    repository.deleteById(entity);
   }
 
   @Override

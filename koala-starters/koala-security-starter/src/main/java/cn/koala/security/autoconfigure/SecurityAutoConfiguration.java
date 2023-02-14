@@ -103,18 +103,18 @@ public class SecurityAutoConfiguration {
     JdbcRegisteredClientRepository jdbcRegisteredClientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);
     RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
       .clientId("koala-admin")
-      .clientSecret(passwordEncoder.encode("koala-admin"))
+      .clientSecret(passwordEncoder.encode("123456"))
       .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
       .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_POST)
       .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
       .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
       .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
-      .redirectUri("http://127.0.0.1:3000")
+      .redirectUri("https://127.0.0.1:3100/login")
       .redirectUri("http://127.0.0.1:9000/swagger-ui/oauth2-redirect.html")
       .scope(OidcScopes.OPENID)
       .scope(OidcScopes.PROFILE)
       .scope("all")
-      .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
+      .clientSettings(ClientSettings.builder().requireAuthorizationConsent(false).build())
       .build();
     if (jdbcRegisteredClientRepository.findByClientId(registeredClient.getClientId()) == null) {
       jdbcRegisteredClientRepository.save(registeredClient);

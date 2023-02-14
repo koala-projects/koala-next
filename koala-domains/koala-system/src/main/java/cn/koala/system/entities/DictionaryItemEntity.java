@@ -19,4 +19,5 @@ public class DictionaryItemEntity extends BaseSystemEntity implements Dictionary
   protected String code;
   protected String name;
   protected String remark;
+  protected Long dictionaryId;
 }

@@ -3,6 +3,7 @@ package cn.koala.system.apis;
 import cn.koala.system.Role;
 import cn.koala.system.entities.RoleEntity;
 import cn.koala.system.services.RoleService;
+import cn.koala.web.DataRequest;
 import cn.koala.web.DataResponse;
 import cn.koala.web.Response;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,6 +50,17 @@ public class RoleApiImpl implements RoleApi {
   @Override
   public Response delete(Long id) {
     roleService.delete(RoleEntity.builder().id(id).build());
+    return Response.SUCCESS;
+  }
+
+  @Override
+  public DataResponse<List<Long>> getPermissionIds(Long id) {
+    return DataResponse.ok(roleService.getPermissionIds(id));
+  }
+
+  @Override
+  public Response setPermissionIds(Long id, DataRequest<List<Long>> request) {
+    roleService.setPermissionIds(id, request.getData());
     return Response.SUCCESS;
   }
 }

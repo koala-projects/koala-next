@@ -39,7 +39,7 @@ public interface DepartmentApi {
    *
    * @return 树形结构部门列表
    */
-  @PreAuthorize("hasAuthority('department:read')")
+  @PreAuthorize("hasAuthority('system:department:tree')")
   @Operation(summary = "查询部门树")
   @ApiResponse(responseCode = "200", description = "成功",
     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = DepartmentTreeResult.class))}
@@ -53,12 +53,12 @@ public interface DepartmentApi {
    * @param id 部门id
    * @return 部门
    */
-  @PreAuthorize("hasAuthority('department:read')")
+  @PreAuthorize("hasAuthority('system:department:load')")
   @Operation(summary = "根据id查询部门")
   @ApiResponse(responseCode = "200", description = "成功",
     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = DepartmentResult.class))}
   )
-  @Parameter(in = ParameterIn.PATH, name = "id", description = "部门id", schema = @Schema(type = "string"))
+  @Parameter(in = ParameterIn.PATH, name = "id", description = "部门id", schema = @Schema(type = "integer"))
   @GetMapping("{id}")
   DataResponse<Department> load(@PathVariable("id") Long id);
 
@@ -68,7 +68,7 @@ public interface DepartmentApi {
    * @param entity 部门数据实体
    * @return 部门
    */
-  @PreAuthorize("hasAuthority('department:write')")
+  @PreAuthorize("hasAuthority('system:department:create')")
   @Operation(summary = "创建部门")
   @ApiResponse(responseCode = "200", description = "成功",
     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = DepartmentResult.class))}
@@ -83,12 +83,12 @@ public interface DepartmentApi {
    * @param entity 部门数据实体
    * @return 操作结果
    */
-  @PreAuthorize("hasAuthority('department:write')")
+  @PreAuthorize("hasAuthority('system:department:update')")
   @Operation(summary = "更新部门")
   @ApiResponse(responseCode = "200", description = "成功",
     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Response.class))}
   )
-  @Parameter(in = ParameterIn.PATH, name = "id", description = "部门id", schema = @Schema(type = "string"))
+  @Parameter(in = ParameterIn.PATH, name = "id", description = "部门id", schema = @Schema(type = "integer"))
   @PutMapping("{id}")
   Response update(@PathVariable("id") Long id, @RequestBody DepartmentEntity entity);
 
@@ -98,12 +98,12 @@ public interface DepartmentApi {
    * @param id 部门id
    * @return 操作结果
    */
-  @PreAuthorize("hasAuthority('department:write')")
+  @PreAuthorize("hasAuthority('system:department:delete')")
   @Operation(summary = "删除部门")
   @ApiResponse(responseCode = "200", description = "成功",
     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Response.class))}
   )
-  @Parameter(in = ParameterIn.PATH, name = "id", description = "部门id", schema = @Schema(type = "string"))
+  @Parameter(in = ParameterIn.PATH, name = "id", description = "部门id", schema = @Schema(type = "integer"))
   @DeleteMapping("{id}")
   Response delete(@PathVariable("id") Long id);
 

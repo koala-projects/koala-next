@@ -24,9 +24,9 @@ public interface CrudRepository<T, ID> {
   /**
    * 根据id删除数据
    *
-   * @param id 主键
+   * @param entity 数据实体
    */
-  void deleteById(ID id);
+  <S extends T> void deleteById(S entity);
 
   /**
    * 根据id更新数据

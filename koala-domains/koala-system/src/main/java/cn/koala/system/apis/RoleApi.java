@@ -3,6 +3,7 @@ package cn.koala.system.apis;
 import cn.koala.openapi.PageableAsQueryParam;
 import cn.koala.system.Role;
 import cn.koala.system.entities.RoleEntity;
+import cn.koala.web.DataRequest;
 import cn.koala.web.DataResponse;
 import cn.koala.web.Response;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,7 +48,7 @@ public interface RoleApi {
    * @param pageable   分页条件
    * @return 角色列表
    */
-  @PreAuthorize("hasAuthority('role:read')")
+  @PreAuthorize("hasAuthority('system:role:page')")
   @Operation(summary = "根据条件分页查询角色")
   @ApiResponse(responseCode = "200", description = "成功",
     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = RolePageResult.class))}
@@ -64,12 +66,12 @@ public interface RoleApi {
    * @param id 角色id
    * @return 角色
    */
-  @PreAuthorize("hasAuthority('role:read')")
+  @PreAuthorize("hasAuthority('system:role:load')")
   @Operation(summary = "根据id查询角色")
   @ApiResponse(responseCode = "200", description = "成功",
     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = RoleResult.class))}
   )
-  @Parameter(in = ParameterIn.PATH, name = "id", description = "角色id", schema = @Schema(type = "string"))
+  @Parameter(in = ParameterIn.PATH, name = "id", description = "角色id", schema = @Schema(type = "integer"))
   @GetMapping("{id}")
   DataResponse<Role> load(@PathVariable("id") Long id);
 
@@ -79,7 +81,7 @@ public interface RoleApi {
    * @param entity 角色数据实体
    * @return 角色
    */
-  @PreAuthorize("hasAuthority('role:write')")
+  @PreAuthorize("hasAuthority('system:role:create')")
   @Operation(summary = "创建角色")
   @ApiResponse(responseCode = "200", description = "成功",
     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = RoleResult.class))}
@@ -94,12 +96,12 @@ public interface RoleApi {
    * @param entity 角色数据实体
    * @return 操作结果
    */
-  @PreAuthorize("hasAuthority('role:write')")
+  @PreAuthorize("hasAuthority('system:role:update')")
   @Operation(summary = "更新角色")
   @ApiResponse(responseCode = "200", description = "成功",
     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Response.class))}
   )
-  @Parameter(in = ParameterIn.PATH, name = "id", description = "角色id", schema = @Schema(type = "string"))
+  @Parameter(in = ParameterIn.PATH, name = "id", description = "角色id", schema = @Schema(type = "integer"))
   @PutMapping("{id}")
   Response update(@PathVariable("id") Long id, @RequestBody RoleEntity entity);
 
@@ -109,20 +111,55 @@ public interface RoleApi {
    * @param id 角色id
    * @return 操作结果
    */
-  @PreAuthorize("hasAuthority('role:write')")
+  @PreAuthorize("hasAuthority('system:role:delete')")
   @Operation(summary = "删除角色")
   @ApiResponse(responseCode = "200", description = "成功",
     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Response.class))}
   )
-  @Parameter(in = ParameterIn.PATH, name = "id", description = "角色id", schema = @Schema(type = "string"))
+  @Parameter(in = ParameterIn.PATH, name = "id", description = "角色id", schema = @Schema(type = "integer"))
   @DeleteMapping("{id}")
   Response delete(@PathVariable("id") Long id);
+
+  /**
+   * 根据id查询角色权限id列表
+   *
+   * @param id 角色id
+   * @return 权限id列表
+   */
+  @PreAuthorize("hasAuthority('system:role:update')")
+  @Operation(summary = "根据id查询角色权限id列表")
+  @ApiResponse(responseCode = "200", description = "成功", content = {
+    @Content(mediaType = "application/json", schema = @Schema(implementation = PermissionIdsResult.class))
+  })
+  @Parameter(in = ParameterIn.PATH, name = "id", description = "角色id", schema = @Schema(type = "integer"))
+  @GetMapping("{id}/permission-ids")
+  DataResponse<List<Long>> getPermissionIds(@PathVariable("id") Long id);
+
+  /**
+   * 角色授权
+   *
+   * @param id      角色id
+   * @param request 权限id列表
+   * @return 操作结果
+   */
+  @PreAuthorize("hasAuthority('system:role:update')")
+  @Operation(summary = "角色授权")
+  @ApiResponse(responseCode = "200", description = "成功",
+    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Response.class))}
+  )
+  @Parameter(in = ParameterIn.PATH, name = "id", description = "角色id", schema = @Schema(type = "integer"))
+  @PutMapping("{id}/permission-ids")
+  Response setPermissionIds(@PathVariable("id") Long id, @RequestBody DataRequest<List<Long>> request);
 
   class RolePageResult extends DataResponse<Page<RoleEntity>> {
 
   }
 
   class RoleResult extends DataResponse<RoleEntity> {
+
+  }
+
+  class PermissionIdsResult extends DataResponse<List<String>> {
 
   }
 }

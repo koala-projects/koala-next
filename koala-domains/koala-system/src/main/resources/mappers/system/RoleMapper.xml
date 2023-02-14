@@ -54,4 +54,18 @@
     <include refid="selectRole"/>
     where t.is_delete = ${@cn.koala.mybatis.YesNo@NO.value}
   </select>
+
+  <select id="findAllPermissionIdById" resultType="java.lang.Long">
+    select permission_id
+    from system_role_permission
+    where role_id = #{id}
+  </select>
+
+  <insert id="updatePermissionIdById">
+    delete from system_role_permission where role_id = #{id};
+    insert into system_role_permission values
+    <foreach item="permissionId" index="index" collection="permissionIds" separator=",">
+      (#{id}, #{permissionId})
+    </foreach>
+  </insert>
 </mapper>

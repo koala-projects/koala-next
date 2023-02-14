@@ -46,13 +46,14 @@ public interface DictionaryItemApi {
    * @param pageable   分页条件
    * @return 字典项列表
    */
-  @PreAuthorize("hasAuthority('dictionary-item:read')")
+  @PreAuthorize("hasAuthority('system:dictionary:update')")
   @Operation(summary = "根据条件分页查询字典项")
   @ApiResponse(responseCode = "200", description = "成功",
     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = DictionaryItemPageResult.class))}
   )
   @Parameter(in = ParameterIn.QUERY, name = "code", description = "字典项代码", schema = @Schema(type = "string"))
   @Parameter(in = ParameterIn.QUERY, name = "name", description = "字典项名称", schema = @Schema(type = "string"))
+  @Parameter(in = ParameterIn.QUERY, name = "dictionaryId", description = "字典id", schema = @Schema(type = "integer"))
   @PageableAsQueryParam
   @GetMapping
   DataResponse<Page<DictionaryItem>> page(@Parameter(hidden = true) @RequestParam Map<String, Object> parameters,
@@ -64,12 +65,12 @@ public interface DictionaryItemApi {
    * @param id 字典项id
    * @return 字典项
    */
-  @PreAuthorize("hasAuthority('dictionary-item:read')")
+  @PreAuthorize("hasAuthority('system:dictionary:update')")
   @Operation(summary = "根据id查询字典项")
   @ApiResponse(responseCode = "200", description = "成功",
     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = DictionaryItemResult.class))}
   )
-  @Parameter(in = ParameterIn.PATH, name = "id", description = "字典id", schema = @Schema(type = "string"))
+  @Parameter(in = ParameterIn.PATH, name = "id", description = "字典项id", schema = @Schema(type = "integer"))
   @GetMapping("{id}")
   DataResponse<DictionaryItem> load(@PathVariable("id") Long id);
 
@@ -79,7 +80,7 @@ public interface DictionaryItemApi {
    * @param entity 字典项数据实体
    * @return 字典
    */
-  @PreAuthorize("hasAuthority('dictionary-item:write')")
+  @PreAuthorize("hasAuthority('system:dictionary:update')")
   @Operation(summary = "创建字典项")
   @ApiResponse(responseCode = "200", description = "成功",
     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = DictionaryItemResult.class))}
@@ -94,12 +95,12 @@ public interface DictionaryItemApi {
    * @param entity 字典数据实体
    * @return 操作结果
    */
-  @PreAuthorize("hasAuthority('dictionary-item:write')")
+  @PreAuthorize("hasAuthority('system:dictionary:update')")
   @Operation(summary = "更新字典")
   @ApiResponse(responseCode = "200", description = "成功",
     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Response.class))}
   )
-  @Parameter(in = ParameterIn.PATH, name = "id", description = "字典id", schema = @Schema(type = "string"))
+  @Parameter(in = ParameterIn.PATH, name = "id", description = "字典项id", schema = @Schema(type = "integer"))
   @PutMapping("{id}")
   Response update(@PathVariable("id") Long id, @RequestBody DictionaryItemEntity entity);
 
@@ -109,12 +110,12 @@ public interface DictionaryItemApi {
    * @param id 字典id
    * @return 操作结果
    */
-  @PreAuthorize("hasAuthority('dictionary-item:write')")
+  @PreAuthorize("hasAuthority('system:dictionary:update')")
   @Operation(summary = "删除字典")
   @ApiResponse(responseCode = "200", description = "成功",
     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Response.class))}
   )
-  @Parameter(in = ParameterIn.PATH, name = "id", description = "字典id", schema = @Schema(type = "string"))
+  @Parameter(in = ParameterIn.PATH, name = "id", description = "字典项id", schema = @Schema(type = "integer"))
   @DeleteMapping("{id}")
   Response delete(@PathVariable("id") Long id);
 

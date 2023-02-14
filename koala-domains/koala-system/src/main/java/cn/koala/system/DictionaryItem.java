@@ -14,4 +14,8 @@ public interface DictionaryItem extends IdModel<Long>, SortModel, StateModel, Au
   String getCode();
 
   String getName();
+
+  String getRemark();
+
+  Long getDictionaryId();
 }
