@@ -87,6 +87,7 @@ public class SecurityAutoConfiguration {
   @Order(2)
   public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http)
     throws Exception {
+    http.csrf().disable();
     http.authorizeHttpRequests().requestMatchers("/swagger*/**", "/v3/api-docs/**").permitAll();
     http.authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated())
       // Form login handles the redirect to the login page from the
