@@ -23,6 +23,6 @@ import java.lang.annotation.Target;
 @Parameter(in = ParameterIn.QUERY, description = "每页大小", name = "size",
   content = @Content(schema = @Schema(type = "integer", defaultValue = "50")))
 @Parameter(in = ParameterIn.QUERY, description = "排序字段: 排序属性(,asc|desc)", name = "sort",
-  content = @Content(array = @ArraySchema(schema = @Schema(type = "string"))))
+  array = @ArraySchema(schema = @Schema(type = "string")))
 public @interface PageableAsQueryParam {
 }
