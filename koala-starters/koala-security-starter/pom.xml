@@ -23,5 +23,11 @@
       <groupId>cn.koala</groupId>
       <artifactId>koala-mybatis-starter</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>com.nimbusds</groupId>
+      <artifactId>oauth2-oidc-sdk</artifactId>
+      <version>9.19</version>
+    </dependency>
   </dependencies>
 </project>

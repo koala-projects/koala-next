@@ -27,17 +27,20 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.jackson2.SecurityJackson2Modules;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
+import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
+import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
@@ -46,6 +49,10 @@ import org.springframework.security.oauth2.server.authorization.config.annotatio
 import org.springframework.security.oauth2.server.authorization.jackson2.OAuth2AuthorizationServerJackson2Module;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
+import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
+import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
+import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
+import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
@@ -53,6 +60,8 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.time.Duration;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
@@ -86,20 +95,6 @@ public class SecurityAutoConfiguration {
   }
 
   @Bean
-  @Order(2)
-  public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http)
-    throws Exception {
-    http.csrf().disable();
-    http.authorizeHttpRequests().requestMatchers("/swagger*/**", "/v3/api-docs/**").permitAll();
-    http.authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated())
-      // Form login handles the redirect to the login page from the
-      // authorization server filter chain
-      .formLogin(Customizer.withDefaults());
-
-    return http.build();
-  }
-
-  @Bean
   public RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate,
                                                                PasswordEncoder passwordEncoder) {
     JdbcRegisteredClientRepository jdbcRegisteredClientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);
@@ -117,6 +112,7 @@ public class SecurityAutoConfiguration {
       .scope(OidcScopes.PROFILE)
       .scope("all")
       .clientSettings(ClientSettings.builder().requireAuthorizationConsent(false).build())
+      .tokenSettings(TokenSettings.builder().accessTokenTimeToLive(Duration.ofDays(30)).build())
       .build();
     if (jdbcRegisteredClientRepository.findByClientId(registeredClient.getClientId()) == null) {
       jdbcRegisteredClientRepository.save(registeredClient);
@@ -188,6 +184,38 @@ public class SecurityAutoConfiguration {
   @Bean
   public AuthorizationServerSettings authorizationServerSettings() {
     return AuthorizationServerSettings.builder().build();
+  }
+
+  @Bean
+  public OAuth2TokenCustomizer<JwtEncodingContext> jwtCustomizer() {
+    return context -> {
+      JwtClaimsSet.Builder claims = context.getClaims();
+      if (context.getTokenType().equals(OAuth2TokenType.ACCESS_TOKEN)) {
+        if (context.getPrincipal().getPrincipal() instanceof UserDetailsImpl userDetails) {
+          claims.claim("id", userDetails.getId().toString());
+          claims.claim("username", userDetails.getUsername());
+          claims.claim("nickname", userDetails.getNickname());
+          claims.claim("scope", new HashSet<>(userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList()));
+        }
+      }
+    };
+  }
+
+  @Bean
+  @Order(2)
+  public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http)
+    throws Exception {
+    http.csrf().disable();
+    http.authorizeHttpRequests().requestMatchers("/swagger*/**", "/v3/api-docs/**").permitAll();
+    http.authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated());
+    http.formLogin(Customizer.withDefaults());
+    http.oauth2ResourceServer().opaqueToken();
+    return http.build();
+  }
+
+  @Bean
+  public OpaqueTokenIntrospector introspector() {
+    return new CustomAuthoritiesOpaqueTokenIntrospector();
   }
 
   @Bean
