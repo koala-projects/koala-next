@@ -23,13 +23,13 @@
 
   <insert id="insert" parameterType="cn.koala.system.entities.DictionaryItemEntity">
     insert into system_dictionary_item(id, code, name, remark, dictionary_id, create_user_id, create_time)
-    values (#{id}, #{code}, #{name}, #{remark}, #{dictionaryId}, #{createUser.id}, #{createTime})
+    values (#{id}, #{code}, #{name}, #{remark}, #{dictionaryId}, #{createUserId}, #{createTime})
   </insert>
 
   <update id="deleteById" parameterType="cn.koala.system.entities.DictionaryItemEntity">
     update system_dictionary_item
     set is_delete      = ${@cn.koala.mybatis.YesNo@YES.value},
-        delete_user_id = #{deleteUser.id},
+        delete_user_id = #{deleteUserId},
         delete_time    = #{deleteTime}
     where id = #{id}
   </update>
@@ -40,7 +40,7 @@
       <if test="code != null">code=#{code},</if>
       <if test="name != null">name=#{name},</if>
       <if test="remark != null">remark=#{remark},</if>
-      last_update_user_id = #{lastUpdateUser.id},
+      last_update_user_id = #{lastUpdateUserId},
       last_update_time = #{lastUpdateTime},
     </trim>
     where is_delete = ${@cn.koala.mybatis.YesNo@NO.value} and id=#{id}

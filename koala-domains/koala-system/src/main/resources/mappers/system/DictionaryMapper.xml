@@ -33,7 +33,7 @@
     where id = #{id}
   </update>
 
-  <update id="update" parameterType="cn.koala.system.entities.DictionaryEntity">
+  <update id="updateById" parameterType="cn.koala.system.entities.DictionaryEntity">
     update system_dictionary
     <trim prefix="set" suffixOverrides=",">
       <if test="code != null">code=#{code},</if>
