@@ -25,6 +25,7 @@ public class UserDetailsImpl implements UserDetails {
   private Long id;
   private String username;
   private String password;
+  private String nickname;
   private YesNo isEnable;
   private List<String> permissionCodes;
   private Collection<SimpleGrantedAuthority> authorities;

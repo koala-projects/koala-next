@@ -32,11 +32,13 @@ public class UserDetailsImplDeserializer extends JsonDeserializer<UserDetailsImp
     Long id = readJsonNode(jsonNode, "id").asLong();
     String username = readJsonNode(jsonNode, "username").asText();
     String password = readJsonNode(jsonNode, "password").asText("");
+    String nickname = readJsonNode(jsonNode, "nickname").asText("");
     YesNo isEnable = YesNo.valueOf(readJsonNode(jsonNode, "isEnable").asText("NO"));
     return UserDetailsImpl.builder()
       .id(id)
       .username(username)
       .password(password)
+      .nickname(nickname)
       .isEnable(isEnable)
       .authorities(authorities)
       .build();

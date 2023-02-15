@@ -24,12 +24,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
       throw new UsernameNotFoundException("未找到指定用户");
     }
     return repository.findByUsername(username).orElse(null);
-    // return new UserDetailsImpl(
-    //   user.get().getId(),
-    //   user.get().getUsername(),
-    //   user.get().getPassword(),
-    //   user.get().getIsEnable() == YesNo.YES,
-    //   new ArrayList<>()
-    // );
   }
 }

@@ -6,6 +6,8 @@ import cn.koala.security.SecurityHelper;
 import cn.koala.security.UserDetailsImpl;
 import cn.koala.security.UserDetailsImplMixin;
 import cn.koala.security.UserDetailsServiceImpl;
+import cn.koala.security.UserinfoApi;
+import cn.koala.security.UserinfoApiImpl;
 import cn.koala.security.repositories.UserDetailsRepository;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -197,5 +199,11 @@ public class SecurityAutoConfiguration {
   @Bean
   public SecurityExceptionHandler securityExceptionHandler() {
     return new SecurityExceptionHandler();
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public UserinfoApi userinfoApi() {
+    return new UserinfoApiImpl();
   }
 }
