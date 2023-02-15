@@ -5,9 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RequestMapping("/api/userinfo")
 @RestController
-@SecurityRequirement(name = "spring-security")
 @Tag(name = "用户信息")
 public interface UserinfoApi {
   /**
@@ -28,7 +25,6 @@ public interface UserinfoApi {
    *
    * @return 用户详细信息
    */
-  @PreAuthorize("hasAuthority('system:user:page')")
   @Operation(summary = "查询当前用户信息")
   @ApiResponse(responseCode = "200", description = "成功",
     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = UserinfoResult.class))}
