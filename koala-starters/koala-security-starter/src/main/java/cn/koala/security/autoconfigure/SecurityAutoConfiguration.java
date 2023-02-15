@@ -1,6 +1,7 @@
 package cn.koala.security.autoconfigure;
 
 import cn.koala.mybatis.AuditorIdSupplier;
+import cn.koala.security.CustomAuthoritiesOpaqueTokenIntrospector;
 import cn.koala.security.JwtHelper;
 import cn.koala.security.SecurityExceptionHandler;
 import cn.koala.security.SecurityHelper;

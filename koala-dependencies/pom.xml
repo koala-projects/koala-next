@@ -28,6 +28,7 @@
     <junit.version>5.8.2</junit.version>
     <slf4j.version>2.0.6</slf4j.version>
     <druid-spring-boot-starter.version>1.2.15</druid-spring-boot-starter.version>
+    <oauth2-oidc-sdk.version>9.19</oauth2-oidc-sdk.version>
     <!--maven-->
     <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
   </properties>
@@ -91,6 +92,11 @@
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
         <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.nimbusds</groupId>
+        <artifactId>oauth2-oidc-sdk</artifactId>
+        <version>${oauth2-oidc-sdk.version}</version>
       </dependency>
       <!--考拉-->
       <dependency>

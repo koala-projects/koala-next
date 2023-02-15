@@ -15,6 +15,12 @@
 
   <dependencies>
     <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <dependency>
       <groupId>cn.koala</groupId>
       <artifactId>koala-security</artifactId>
     </dependency>
@@ -27,7 +33,6 @@
     <dependency>
       <groupId>com.nimbusds</groupId>
       <artifactId>oauth2-oidc-sdk</artifactId>
-      <version>9.19</version>
     </dependency>
   </dependencies>
 </project>

@@ -1,4 +1,4 @@
-package cn.koala.security.autoconfigure;
+package cn.koala.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
