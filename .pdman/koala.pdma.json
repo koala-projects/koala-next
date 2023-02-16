@@ -4,7 +4,7 @@
   "avatar": "",
   "version": "4.3.0",
   "createdTime": "2023-1-29 08:59:43",
-  "updatedTime": "2023-2-14 16:08:01",
+  "updatedTime": "2023-2-16 10:25:24",
   "dbConns": [],
   "profile": {
     "default": {
@@ -3118,6 +3118,23 @@
           "extProps": {},
           "domain": "16120F75-6AA7-4483-868D-F07F511BB081",
           "id": "5D790EA2-BA21-462E-A6E0-AB15A379D607"
+        },
+        {
+          "defKey": "is_half_checked",
+          "defName": "是否半选",
+          "comment": "",
+          "type": "",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": true,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "refDict": "",
+          "extProps": {},
+          "domain": "6BC8F04B-6CFA-4995-98D3-318F5CDD774E",
+          "id": "BE0F2609-D863-4128-BD2C-FF2B7362E755"
         }
       ],
       "correlations": [],

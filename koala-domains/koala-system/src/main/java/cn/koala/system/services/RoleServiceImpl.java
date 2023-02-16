@@ -23,13 +23,13 @@ public class RoleServiceImpl extends BaseSystemService<Role> implements RoleServ
   }
 
   @Override
-  public List<Long> getPermissionIds(Long id) {
-    return ((RoleRepository) repository).findAllPermissionIdById(id);
+  public List<Long> getCheckedPermissionIds(Long id) {
+    return ((RoleRepository) repository).findAllCheckedPermissionIdById(id);
   }
 
   @Override
-  public void setPermissionIds(Long id, List<Long> permissionIds) {
+  public void authorize(Long id, List<Long> checkedIds, List<Long> halfCheckedIds) {
     Assert.isTrue(nonSystem(load(id)), "系统数据不允许修改");
-    ((RoleRepository) repository).updatePermissionIdById(id, permissionIds);
+    ((RoleRepository) repository).authorize(id, checkedIds, halfCheckedIds);
   }
 }

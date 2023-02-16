@@ -113,42 +113,45 @@ CREATE TABLE system_permission
 insert into system_permission(code, name, type, icon, url, component, parent_id, sort_index, is_system, create_user_id,
                               create_time)
 values ('system', '系统管理', 1, 'ion:settings-outline', null, null, null, 1, 1, 1, now()),
-       ('system:user:page', '用户管理', 1, null, null, 'system/user/index.vue', 1, 101, 1, 1, now()),
-       ('system:role:page', '角色管理', 1, null, null, 'system/role/index.vue', 1, 102, 1, 1, now()),
-       ('system:permission:tree', '权限管理', 1, null, null, 'system/permission/index.vue', 1, 103, 1, 1, now()),
-       ('system:department:tree', '部门管理', 1, null, null, 'system/department/index.vue', 1, 104, 1, 1, now()),
-       ('system:dictionary:page', '字典管理', 1, null, null, 'system/dictionary/index.vue', 1, 105, 1, 1, now()),
-       ('system:user:load', '用户查询', 2, null, null, null, 2, 10101, 1, 1, now()),
-       ('system:user:create', '用户创建', 2, null, null, null, 2, 10102, 1, 1, now()),
-       ('system:user:update', '用户修改', 2, null, null, null, 2, 10103, 1, 1, now()),
-       ('system:user:delete', '用户删除', 2, null, null, null, 2, 10104, 1, 1, now()),
-       ('system:role:load', '角色查询', 2, null, null, null, 3, 10201, 1, 1, now()),
-       ('system:role:create', '角色创建', 2, null, null, null, 3, 10202, 1, 1, now()),
-       ('system:role:update', '角色修改', 2, null, null, null, 3, 10203, 1, 1, now()),
-       ('system:role:delete', '角色删除', 2, null, null, null, 3, 10204, 1, 1, now()),
-       ('system:permission:load', '权限查询', 2, null, null, null, 4, 10301, 1, 1, now()),
-       ('system:permission:create', '权限创建', 2, null, null, null, 4, 10302, 1, 1, now()),
-       ('system:permission:update', '权限修改', 2, null, null, null, 4, 10303, 1, 1, now()),
-       ('system:permission:delete', '权限删除', 2, null, null, null, 4, 10304, 1, 1, now()),
-       ('system:department:load', '部门查询', 2, null, null, null, 5, 10401, 1, 1, now()),
-       ('system:department:create', '部门创建', 2, null, null, null, 5, 10402, 1, 1, now()),
-       ('system:department:update', '部门修改', 2, null, null, null, 5, 10403, 1, 1, now()),
-       ('system:department:delete', '部门删除', 2, null, null, null, 5, 10404, 1, 1, now()),
-       ('system:dictionary:load', '字典查询', 2, null, null, null, 6, 10501, 1, 1, now()),
-       ('system:dictionary:create', '字典创建', 2, null, null, null, 6, 10502, 1, 1, now()),
-       ('system:dictionary:update', '字典修改', 2, null, null, null, 6, 10503, 1, 1, now()),
-       ('system:dictionary:delete', '字典删除', 2, null, null, null, 6, 10504, 1, 1, now());
+       ('system:user', '用户管理', 1, null, null, 'system/user/index.vue', 1, 101, 1, 1, now()),
+       ('system:role', '角色管理', 1, null, null, 'system/role/index.vue', 1, 102, 1, 1, now()),
+       ('system:permission', '权限管理', 1, null, null, 'system/permission/index.vue', 1, 103, 1, 1, now()),
+       ('system:department', '部门管理', 1, null, null, 'system/department/index.vue', 1, 104, 1, 1, now()),
+       ('system:dictionary', '字典管理', 1, null, null, 'system/dictionary/index.vue', 1, 105, 1, 1, now()),
+       ('system:user:page', '用户列表', 2, null, null, null, 2, 10101, 1, 1, now()),
+       ('system:user:load', '用户查询', 2, null, null, null, 2, 10102, 1, 1, now()),
+       ('system:user:create', '用户创建', 2, null, null, null, 2, 10103, 1, 1, now()),
+       ('system:user:update', '用户修改', 2, null, null, null, 2, 10104, 1, 1, now()),
+       ('system:user:delete', '用户删除', 2, null, null, null, 2, 10105, 1, 1, now()),
+       ('system:role:page', '角色列表', 2, null, null, null, 3, 10201, 1, 1, now()),
+       ('system:role:load', '角色查询', 2, null, null, null, 3, 10202, 1, 1, now()),
+       ('system:role:create', '角色创建', 2, null, null, null, 3, 10203, 1, 1, now()),
+       ('system:role:update', '角色修改', 2, null, null, null, 3, 10204, 1, 1, now()),
+       ('system:role:delete', '角色删除', 2, null, null, null, 3, 10205, 1, 1, now()),
+       ('system:permission:tree', '权限列表', 2, null, null, null, 4, 10301, 1, 1, now()),
+       ('system:department:tree', '部门列表', 2, null, null, null, 5, 10401, 1, 1, now()),
+       ('system:department:load', '部门查询', 2, null, null, null, 5, 10402, 1, 1, now()),
+       ('system:department:create', '部门创建', 2, null, null, null, 5, 10403, 1, 1, now()),
+       ('system:department:update', '部门修改', 2, null, null, null, 5, 10404, 1, 1, now()),
+       ('system:department:delete', '部门删除', 2, null, null, null, 5, 10405, 1, 1, now()),
+       ('system:dictionary:page', '字典列表', 2, null, null, null, 6, 10501, 1, 1, now()),
+       ('system:dictionary:load', '字典查询', 2, null, null, null, 6, 10502, 1, 1, now()),
+       ('system:dictionary:create', '字典创建', 2, null, null, null, 6, 10503, 1, 1, now()),
+       ('system:dictionary:update', '字典修改', 2, null, null, null, 6, 10504, 1, 1, now()),
+       ('system:dictionary:delete', '字典删除', 2, null, null, null, 6, 10505, 1, 1, now());
 
 # 角色权限关系表
 DROP TABLE IF EXISTS system_role_permission;
 CREATE TABLE system_role_permission
 (
-  `role_id`       BIGINT NOT NULL COMMENT '角色id',
-  `permission_id` BIGINT NOT NULL DEFAULT 0 COMMENT '权限id'
+  `role_id`         BIGINT NOT NULL COMMENT '角色id',
+  `permission_id`   BIGINT NOT NULL DEFAULT 0 COMMENT '权限id',
+  `is_half_checked` INT    NOT NULL COMMENT '是否半选'
 ) COMMENT = '系统角色权限关系表';
 
+
 insert into system_role_permission
-select 1, id
+select 1, id, 0
 from system_permission;
 
 # 角色表

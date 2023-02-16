@@ -33,7 +33,7 @@
     where id = #{id}
   </update>
 
-  <update id="update" parameterType="cn.koala.system.entities.RoleEntity">
+  <update id="updateById" parameterType="cn.koala.system.entities.RoleEntity">
     update system_role
     <trim prefix="set" suffixOverrides=",">
       <if test="code != null">code=#{code},</if>
@@ -52,20 +52,34 @@
 
   <select id="findAll" resultType="cn.koala.system.entities.RoleEntity">
     <include refid="selectRole"/>
-    where t.is_delete = ${@cn.koala.mybatis.YesNo@NO.value}
+    <where>
+      t.is_delete = ${@cn.koala.mybatis.YesNo@NO.value}
+      <if test="parameters.code != null and parameters.code != ''">
+        and t.code like concat(#{parameters.code}, '%')
+      </if>
+      <if test="parameters.name != null and parameters.name != ''">
+        and t.name like concat(#{parameters.name}, '%')
+      </if>
+    </where>
   </select>
 
-  <select id="findAllPermissionIdById" resultType="java.lang.Long">
+  <select id="findAllCheckedPermissionIdById" resultType="java.lang.Long">
     select permission_id
     from system_role_permission
     where role_id = #{id}
+      and is_half_checked = ${@cn.koala.mybatis.YesNo@NO.value}
   </select>
 
-  <insert id="updatePermissionIdById">
+  <insert id="authorize">
     delete from system_role_permission where role_id = #{id};
-    insert into system_role_permission values
-    <foreach item="permissionId" index="index" collection="permissionIds" separator=",">
-      (#{id}, #{permissionId})
-    </foreach>
+    <if test="!checkedIds.isEmpty() || !halfCheckedIds.isEmpty()">
+      insert into system_role_permission values
+      <foreach item="checkedId" index="index" collection="checkedIds">
+        (#{id}, #{checkedId}, ${@cn.koala.mybatis.YesNo@NO.value}),
+      </foreach>
+      <foreach item="halfCheckedId" index="index" collection="halfCheckedIds" separator=",">
+        (#{id}, #{halfCheckedId}, ${@cn.koala.mybatis.YesNo@YES.value})
+      </foreach>
+    </if>
   </insert>
 </mapper>

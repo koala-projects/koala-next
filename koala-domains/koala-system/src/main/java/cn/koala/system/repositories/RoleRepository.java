@@ -12,7 +12,11 @@ import java.util.List;
  * @author Houtaroy
  */
 public interface RoleRepository extends CrudRepository<Role, Long> {
-  List<Long> findAllPermissionIdById(Long id);
+  List<Long> findAllCheckedPermissionIdById(Long id);
 
-  void updatePermissionIdById(@Param("id") Long id, @Param("permissionIds") List<Long> permissionIds);
+  void authorize(
+    @Param("id") Long id,
+    @Param("checkedIds") List<Long> checkedIds,
+    @Param("halfCheckedIds") List<Long> halfCheckedIds
+  );
 }

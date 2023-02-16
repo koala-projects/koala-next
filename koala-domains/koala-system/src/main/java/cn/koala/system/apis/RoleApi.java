@@ -3,7 +3,6 @@ package cn.koala.system.apis;
 import cn.koala.openapi.PageableAsQueryParam;
 import cn.koala.system.Role;
 import cn.koala.system.entities.RoleEntity;
-import cn.koala.web.DataRequest;
 import cn.koala.web.DataResponse;
 import cn.koala.web.Response;
 import io.swagger.v3.oas.annotations.Operation;
@@ -121,25 +120,25 @@ public interface RoleApi {
   Response delete(@PathVariable("id") Long id);
 
   /**
-   * 根据id查询角色权限id列表
+   * 根据id查询全选权限id列表
    *
    * @param id 角色id
-   * @return 权限id列表
+   * @return 全选权限id列表
    */
   @PreAuthorize("hasAuthority('system:role:update')")
-  @Operation(summary = "根据id查询角色权限id列表")
+  @Operation(summary = "根据id查询角色权限关系列表")
   @ApiResponse(responseCode = "200", description = "成功", content = {
-    @Content(mediaType = "application/json", schema = @Schema(implementation = PermissionIdsResult.class))
+    @Content(mediaType = "application/json", schema = @Schema(implementation = CheckedPermissionIdsResult.class))
   })
   @Parameter(in = ParameterIn.PATH, name = "id", description = "角色id", schema = @Schema(type = "integer"))
-  @GetMapping("{id}/permission-ids")
-  DataResponse<List<Long>> getPermissionIds(@PathVariable("id") Long id);
+  @GetMapping("{id}/checked-permission-ids")
+  DataResponse<List<Long>> getCheckedPermissionIds(@PathVariable("id") Long id);
 
   /**
    * 角色授权
    *
    * @param id      角色id
-   * @param request 权限id列表
+   * @param request 角色授权请求
    * @return 操作结果
    */
   @PreAuthorize("hasAuthority('system:role:update')")
@@ -148,8 +147,8 @@ public interface RoleApi {
     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Response.class))}
   )
   @Parameter(in = ParameterIn.PATH, name = "id", description = "角色id", schema = @Schema(type = "integer"))
-  @PutMapping("{id}/permission-ids")
-  Response setPermissionIds(@PathVariable("id") Long id, @RequestBody DataRequest<List<Long>> request);
+  @PutMapping("{id}/authorize")
+  Response setRolePermissions(@PathVariable("id") Long id, @RequestBody RoleAuthorizeRequest request);
 
   class RolePageResult extends DataResponse<Page<RoleEntity>> {
 
@@ -159,7 +158,7 @@ public interface RoleApi {
 
   }
 
-  class PermissionIdsResult extends DataResponse<List<String>> {
+  class CheckedPermissionIdsResult extends DataResponse<List<Long>> {
 
   }
 }

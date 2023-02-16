@@ -12,7 +12,7 @@ import java.util.List;
  * @author Houtaroy
  */
 public interface RoleService extends CrudService<Role, Long>, PagingService<Role, Long> {
-  List<Long> getPermissionIds(Long id);
+  List<Long> getCheckedPermissionIds(Long id);
 
-  void setPermissionIds(Long id, List<Long> permissionIds);
+  void authorize(Long id, List<Long> checkedIds, List<Long> halfCheckedIds);
 }
