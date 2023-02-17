@@ -28,11 +28,11 @@ public class UserServiceImpl extends BaseSystemService<User> implements UserServ
   }
 
   @Override
-  public <S extends User> void save(S entity) {
+  public <S extends User> void add(S entity) {
     if (StringUtils.hasLength(entity.getPassword())) {
       entity.setPassword(passwordEncoder.encode(entity.getPassword()));
     }
-    super.save(entity);
+    super.add(entity);
   }
 
   @Override

@@ -86,10 +86,12 @@
 
   <insert id="updateRoleIdById">
     delete from system_user_role where user_id = #{id};
-    insert into system_user_role values
-    <foreach item="roleId" index="index" collection="roleIds" separator=",">
-      (#{id}, #{roleId})
-    </foreach>
+    <if test="!roleIds.isEmpty()">
+      insert into system_user_role values
+      <foreach item="roleId" index="index" collection="roleIds" separator=",">
+        (#{id}, #{roleId})
+      </foreach>
+    </if>
   </insert>
 
   <select id="findAllDepartmentIdById" resultType="java.lang.Long">
@@ -100,9 +102,11 @@
 
   <insert id="updateDepartmentIdById">
     delete from system_user_department where user_id = #{id};
-    insert into system_user_department values
-    <foreach item="departmentId" index="index" collection="departmentIds" separator=",">
-      (#{id}, #{departmentId})
-    </foreach>
+    <if test="!departmentIds.isEmpty()">
+      insert into system_user_department values
+      <foreach item="departmentId" index="index" collection="departmentIds" separator=",">
+        (#{id}, #{departmentId})
+      </foreach>
+    </if>
   </insert>
 </mapper>
